@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -22,8 +24,11 @@ public class RedBlackTree_GUI extends JFrame {
         });
     }
 
+
     public static void main(String args[]) {
-        JFrame frame = new RedBlackTree_GUI("Red Black Tree");
+        RedBlackTree_GUI frame = new RedBlackTree_GUI("Red Black Tree");
         frame.setVisible(true);
+
+
     }
 }
