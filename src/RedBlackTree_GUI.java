@@ -1,15 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.event.*;
 
 public class RedBlackTree_GUI extends JFrame {
+    RedBlackTree RBT = new RedBlackTree();
     private JPanel mainWindow;
-    private JButton Add;
-    private JButton Delete;
+    private JButton addButton;
+    private JButton deleteButton;
     private JTextField insertionNumber;
+    private JButton clearButton;
 
     public RedBlackTree_GUI(String title) {
         super(title);
@@ -22,13 +21,35 @@ public class RedBlackTree_GUI extends JFrame {
                 insertionNumber.setText("");
             }
         });
+        /*insertionNumber.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                insertionNumber.setText("Insert a Number");
+            }
+        });*/
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(insertionNumber.getText());
+                RBT.insert(Integer.parseInt(insertionNumber.getText()));
+                RBT.printTree();
+            }
+        });
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RBT.Delete(Integer.parseInt(insertionNumber.getText()));
+                RBT.printTree();
+            }
+        });
+        insertionNumber.addKeyListener(new KeyAdapter() {
+        });
     }
 
 
     public static void main(String args[]) {
         RedBlackTree_GUI frame = new RedBlackTree_GUI("Red Black Tree");
         frame.setVisible(true);
-
 
     }
 }
