@@ -1,3 +1,4 @@
+import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -9,6 +10,7 @@ public class RedBlackTree_GUI extends JFrame {
     private JButton deleteButton;
     private JTextField insertionNumber;
     private JButton clearButton;
+    ArrayList<Node> nodes;
 
     public RedBlackTree_GUI(String title) {
         super(title);
@@ -43,6 +45,12 @@ public class RedBlackTree_GUI extends JFrame {
             }
         });
         insertionNumber.addKeyListener(new KeyAdapter() {
+        });
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
         });
     }
 

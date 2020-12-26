@@ -1,6 +1,12 @@
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
 public class RedBlackTree {
     private Node root;
     private Node NEWN;
+    ArrayList<Integer> nodes;
 
     // Search the tree.
     private Node searchTreeHelper(Node node, int key) {
@@ -13,6 +19,7 @@ public class RedBlackTree {
         }
         return searchTreeHelper(node.right, key);
     }
+
 
     private void newRBT(Node u, Node v) {
         if (u.parent == null) {
@@ -138,6 +145,7 @@ public class RedBlackTree {
     // Balance the node after insertion
     private void fixInsert(Node N) {
         Node U;
+
         while (N.parent.color == 1) {
             if (N.parent == N.parent.parent.right) {
                 U = N.parent.parent.left;
@@ -178,6 +186,7 @@ public class RedBlackTree {
             }
         }
         root.color = 0;
+        this.printTree();
     }
 
     public void insert(int key) {
@@ -187,7 +196,7 @@ public class RedBlackTree {
         node.left = NEWN;
         node.right = NEWN;
         node.color = 1;
-
+        nodes.add(node.data);
         Node y = null;
         Node x = this.root;
 
@@ -265,7 +274,7 @@ public class RedBlackTree {
     }
 
     // el print m4 3gbaneeeee ya jooooo.
-    private void printHelper(Node root, String indent, boolean last) {
+    private void printHelper(Node root, String indent, boolean last, GraphDraw f) {
         if (root != NEWN) {
             System.out.print(indent);
             if (last) {
@@ -278,8 +287,32 @@ public class RedBlackTree {
 
             String sColor = root.color == 1 ? "RED" : "BLACK";
             System.out.println(root.data + "(" + sColor + ")");
-            printHelper(root.left, indent, false);
-            printHelper(root.right, indent, true);
+
+
+
+            int x = 200; int y = 50;
+            ArrayList<Integer> printing = nodes;
+
+            for (int i : printing){
+
+                if(last){
+                    f.addNode(i, x, y);
+                    x = x + 50;
+                    y = y + 30;
+                    //nodes.remove(printing.indexOf(i));
+                }else {
+                    f.addNode(i, x, y);
+                    //nodes.remove(printing.indexOf(i));
+                    x = x - 50;
+                    y = y + 30;
+                }
+
+            }
+
+            //f.addEdge(0, 1);
+
+            printHelper(root.left, indent, false, f);
+            printHelper(root.right, indent, true, f);
         }
     }
 
@@ -289,6 +322,7 @@ public class RedBlackTree {
         NEWN.left = null;
         NEWN.right = null;
         root = NEWN;
+        nodes = new ArrayList<Integer>();
     }
 
     public Node searchTree(int k) {
@@ -304,7 +338,10 @@ public class RedBlackTree {
     }
 
     public void printTree() {
-        printHelper(this.root, "", true);
+        GraphDraw f = new GraphDraw("Tree");
+        f.setSize(400, 400);
+        f.setVisible(true);
+        printHelper(this.root, "", true, f);
     }
 
 }
