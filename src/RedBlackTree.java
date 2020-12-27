@@ -308,7 +308,6 @@ public class RedBlackTree {
                 }
 
             }
-
             //f.addEdge(0, 1);
 
             printHelper(root.left, indent, false, f);
@@ -341,6 +340,7 @@ public class RedBlackTree {
         GraphDraw f = new GraphDraw("Tree");
         f.setSize(400, 400);
         f.setVisible(true);
+        
         printHelper(this.root, "", true, f);
     }
 
