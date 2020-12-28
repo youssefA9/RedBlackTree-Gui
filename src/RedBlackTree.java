@@ -1,6 +1,19 @@
+import edu.uci.ics.jung.graph.DelegateForest;
+import edu.uci.ics.jung.graph.Forest;
+
+import java.awt.*;
+
 public class RedBlackTree {
     private Node root;
     private Node NEWN;
+
+    public void clear() {
+        NEWN = new Node();
+        NEWN.color = Color.BLACK;
+        NEWN.left = null;
+        NEWN.right = null;
+        root = NEWN;
+    }
 
     // Search the tree.
     private Node searchTreeHelper(Node node, int key) {
@@ -28,61 +41,61 @@ public class RedBlackTree {
     // Balance the tree after Action of a node
     private void fixDelete(Node A) {
         Node B;
-        while (A != root && A.color == 0) {
+        while (A != root && A.color == Color.BLACK) {
             if (A == A.parent.left) {
                 B = A.parent.right;
-                if (B.color == 1) {
-                    B.color = 0;
-                    A.parent.color = 1;
+                if (B.color == Color.RED) {
+                    B.color = Color.BLACK;
+                    A.parent.color = Color.RED;
                     leftRotate(A.parent);
                     B = A.parent.right;
                 }
-                if (B.left.color == 0 && B.right.color == 0) {
-                    B.color = 1;
+                if (B.left.color == Color.BLACK && B.right.color == Color.BLACK) {
+                    B.color = Color.RED;
                     A = A.parent;
                 } else {
-                    if (B.right.color == 0) {
-                        B.left.color = 0;
-                        B.color = 1;
+                    if (B.right.color == Color.BLACK) {
+                        B.left.color = Color.BLACK;
+                        B.color = Color.RED;
                         rightRotate(B);
                         B = A.parent.right;
                     }
 
                     B.color = A.parent.color;
-                    A.parent.color = 0;
-                    B.right.color = 0;
+                    A.parent.color = Color.BLACK;
+                    B.right.color = Color.BLACK;
                     leftRotate(A.parent);
                     A = root;
                 }
             } else {
                 B = A.parent.left;
-                if (B.color == 1) {
-                    B.color = 0;
-                    A.parent.color = 1;
+                if (B.color == Color.RED) {
+                    B.color = Color.BLACK;
+                    A.parent.color = Color.RED;
                     rightRotate(A.parent);
                     B = A.parent.left;
                 }
 
-                if (B.right.color == 0 && B.right.color == 0) {
-                    B.color = 1;
+                if (B.right.color == Color.BLACK && B.right.color == Color.BLACK) {
+                    B.color = Color.RED;
                     A = A.parent;
                 } else {
-                    if (B.left.color == 0) {
-                        B.right.color = 0;
-                        B.color = 1;
+                    if (B.left.color == Color.BLACK) {
+                        B.right.color = Color.BLACK;
+                        B.color = Color.RED;
                         leftRotate(B);
                         B = A.parent.left;
                     }
 
                     B.color = A.parent.color;
-                    A.parent.color = 0;
-                    B.left.color = 0;
+                    A.parent.color = Color.BLACK;
+                    B.left.color = Color.BLACK;
                     rightRotate(A.parent);
                     A = root;
                 }
             }
         }
-        A.color = 0;
+        A.color = Color.BLACK;
     }
 
     private void DeleteNode(Node node, int key) {
@@ -106,7 +119,7 @@ public class RedBlackTree {
         }
 
         y = z;
-        int yOriginalColor = y.color;
+        Paint yOriginalColor = y.color;
         if (z.left == NEWN) {
             x = z.right;
             newRBT(z, z.right);
@@ -130,7 +143,7 @@ public class RedBlackTree {
             y.left.parent = y;
             y.color = z.color;
         }
-        if (yOriginalColor == 0) {
+        if (yOriginalColor == Color.BLACK) {
             fixDelete(x);
         }
     }
@@ -138,38 +151,38 @@ public class RedBlackTree {
     // Balance the node after insertion
     private void fixInsert(Node N) {
         Node U;
-        while (N.parent.color == 1) {
+        while (N.parent.color == Color.RED) {
             if (N.parent == N.parent.parent.right) {
                 U = N.parent.parent.left;
-                if (U.color == 1) {
-                    U.color = 0;
-                    N.parent.color = 0;
-                    N.parent.parent.color = 1;
+                if (U.color == Color.RED) {
+                    U.color = Color.BLACK;
+                    N.parent.color = Color.BLACK;
+                    N.parent.parent.color = Color.RED;
                     N = N.parent.parent;
                 } else {
                     if (N == N.parent.left) {
                         N = N.parent;
                         rightRotate(N);
                     }
-                    N.parent.color = 0;
-                    N.parent.parent.color = 1;
+                    N.parent.color = Color.BLACK;
+                    N.parent.parent.color = Color.RED;
                     leftRotate(N.parent.parent);
                 }
             } else {
                 U = N.parent.parent.right;
 
-                if (U.color == 1) {
-                    U.color = 0;
-                    N.parent.color = 0;
-                    N.parent.parent.color = 1;
+                if (U.color == Color.RED) {
+                    U.color = Color.BLACK;
+                    N.parent.color = Color.BLACK;
+                    N.parent.parent.color = Color.RED;
                     N = N.parent.parent;
                 } else {
                     if (N == N.parent.right) {
                         N = N.parent;
                         leftRotate(N);
                     }
-                    N.parent.color = 0;
-                    N.parent.parent.color = 1;
+                    N.parent.color = Color.BLACK;
+                    N.parent.parent.color = Color.RED;
                     rightRotate(N.parent.parent);
                 }
             }
@@ -177,7 +190,7 @@ public class RedBlackTree {
                 break;
             }
         }
-        root.color = 0;
+        root.color = Color.BLACK;
     }
 
     public void insert(int key) {
@@ -186,7 +199,7 @@ public class RedBlackTree {
         node.data = key;
         node.left = NEWN;
         node.right = NEWN;
-        node.color = 1;
+        node.color = Color.RED;
 
         Node y = null;
         Node x = this.root;
@@ -210,7 +223,7 @@ public class RedBlackTree {
         }
 
         if (node.parent == null) {
-            node.color = 0;
+            node.color = Color.BLACK;
             return;
         }
 
@@ -276,7 +289,7 @@ public class RedBlackTree {
                 indent += "|  ";
             }
 
-            String sColor = root.color == 1 ? "RED" : "BLACK";
+            String sColor = root.color == Color.RED ? "RED" : "BLACK";
             System.out.println(root.data + "(" + sColor + ")");
             printHelper(root.left, indent, false);
             printHelper(root.right, indent, true);
@@ -285,7 +298,7 @@ public class RedBlackTree {
 
     public RedBlackTree() {
         NEWN = new Node();
-        NEWN.color = 0;
+        NEWN.color = Color.BLACK;
         NEWN.left = null;
         NEWN.right = null;
         root = NEWN;
@@ -305,6 +318,28 @@ public class RedBlackTree {
 
     public void printTree() {
         printHelper(this.root, "", true);
+    }
+
+    Forest<Node, Integer> buildGraph() {
+
+        Forest<Node, Integer> graph = new DelegateForest<>();
+        int i = 0;
+        Node temp = new Node();
+        temp = root;
+        //while (temp.right != null) {
+        graph.addVertex(temp);
+        if (temp.right != null) {
+            graph.addVertex(temp.right);
+            graph.addEdge(i + 1, temp, temp.right);
+        }
+        if (temp.left != null) {
+            graph.addVertex(temp.left);
+            graph.addEdge(i, temp, temp.left);
+        }
+        temp = temp.right;
+        // }
+
+        return graph;
     }
 
 }
