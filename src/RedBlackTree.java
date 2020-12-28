@@ -349,7 +349,7 @@ public class RedBlackTree {
         temp = temp.right;
 
         // }
-        return graph.addVertex();
+        return graph;
     }
 
 }
