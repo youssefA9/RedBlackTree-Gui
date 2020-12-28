@@ -1,16 +1,16 @@
 import java.awt.*;
 
 class Node {
-    int data;
+    String data;
     Node parent;
-    Node left;
-    Node right;
+    Node left = null;
+    Node right = null;
     Paint color;
 
     Node() {
     }
 
-    Node(int n, Paint c) {
+    Node(String n, Paint c) {
         data = n;
         color = c;
     }

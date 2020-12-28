@@ -17,11 +17,11 @@ public class RedBlackTree {
 
     // Search the tree.
     private Node searchTreeHelper(Node node, int key) {
-        if (node == NEWN || key == node.data) {
+        if (node == NEWN || key == Integer.valueOf(node.data)) {
             return node;
         }
 
-        if (key < node.data) {
+        if (key < Integer.valueOf(node.data)) {
             return searchTreeHelper(node.left, key);
         }
         return searchTreeHelper(node.right, key);
@@ -102,11 +102,11 @@ public class RedBlackTree {
         Node z = NEWN;
         Node x, y;
         while (node != NEWN) {
-            if (node.data == key) {
+            if (Integer.valueOf(node.data) == key) {
                 z = node;
             }
 
-            if (node.data <= key) {
+            if (Integer.valueOf(node.data) <= key) {
                 node = node.right;
             } else {
                 node = node.left;
@@ -193,7 +193,7 @@ public class RedBlackTree {
         root.color = Color.BLACK;
     }
 
-    public void insert(int key) {
+    public void insert(String key) {
         Node node = new Node();
         node.parent = null;
         node.data = key;
@@ -206,7 +206,7 @@ public class RedBlackTree {
 
         while (x != NEWN) {
             y = x;
-            if (node.data < x.data) {
+            if (Integer.valueOf(node.data) < Integer.valueOf(y.data)) {
                 x = x.left;
             } else {
                 x = x.right;
@@ -216,7 +216,7 @@ public class RedBlackTree {
         node.parent = y;
         if (y == null) {
             root = node;
-        } else if (node.data < y.data) {
+        } else if (Integer.valueOf(node.data) < Integer.valueOf(y.data)) {
             y.left = node;
         } else {
             y.right = node;
@@ -277,7 +277,6 @@ public class RedBlackTree {
         x.parent = y;
     }
 
-    // el print m4 3gbaneeeee ya jooooo.
     private void printHelper(Node root, String indent, boolean last) {
         if (root != NEWN) {
             System.out.print(indent);
@@ -288,7 +287,6 @@ public class RedBlackTree {
                 System.out.print("L----");
                 indent += "|  ";
             }
-
             String sColor = root.color == Color.RED ? "RED" : "BLACK";
             System.out.println(root.data + "(" + sColor + ")");
             printHelper(root.left, indent, false);
@@ -325,21 +323,33 @@ public class RedBlackTree {
         Forest<Node, Integer> graph = new DelegateForest<>();
         int i = 0;
         Node temp = new Node();
+        Node t;
         temp = root;
-        //while (temp.right != null) {
+        //while (root.right != null) {
         graph.addVertex(temp);
-        if (temp.right != null) {
-            graph.addVertex(temp.right);
-            graph.addEdge(i + 1, temp, temp.right);
-        }
-        if (temp.left != null) {
+        if (root.left.data != null) {
+            System.out.println("Left null");
             graph.addVertex(temp.left);
             graph.addEdge(i, temp, temp.left);
+        } else {
+            t = new Node(null, Color.BLACK);
+            graph.addVertex(t);
+            graph.addEdge(i, temp, t);
         }
-        temp = temp.right;
-        // }
+        if (root.right.data != null) {
+            System.out.println("right null");
+            graph.addVertex(temp.right);
+            graph.addEdge(i + 1, temp, temp.right);
+        } else {
+            t = new Node(null, Color.BLACK);
+            graph.addVertex(t);
+            graph.addEdge(i + 1, temp, t);
+        }
 
-        return graph;
+        temp = temp.right;
+
+        // }
+        return graph.addVertex();
     }
 
 }

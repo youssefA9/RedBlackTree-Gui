@@ -40,7 +40,7 @@ public class RedBlackTree_GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println(insertionNumber.getText());
-                RBT.insert(Integer.parseInt(insertionNumber.getText()));
+                RBT.insert(insertionNumber.getText());
                 RBT.printTree();
                 drawGraph(RBT.buildGraph());
             }
@@ -76,7 +76,6 @@ public class RedBlackTree_GUI extends JFrame {
 
         vv.getRenderContext().setVertexLabelTransformer(vertexText);
         vv.getRenderContext().setVertexFillPaintTransformer(vertexColor);
-
 
         space.removeAll();
         space.add(vv);
